@@ -1,0 +1,23 @@
+version: '3.1'
+services:
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: mas_gestion_4
+    ports:
+      - "3307:3306"
+    volumes:
+      - $HOME/Desktop/MySQL-Snippets/school.sql:/school.sql
+  metabase-app:
+    container_name: metabase
+    image: metabase/metabase
+    ports:
+      - 3030:3030
+    volumes:
+      - /home/app/metabase-data:/metabase-data
+    environment:
+      MB_DB_PORT: 3306
+    links:
+      - db:mysql
